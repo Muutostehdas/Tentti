@@ -1,0 +1,41 @@
+
+toukok. 17, 2021 23:29:01.611 NEW SESSION
+toukok. 17, 2021 23:29:01.611 _create_dc_and_bitmap: The operation completed successfully.
+toukok. 17, 2021 23:29:01.611 
+toukok. 17, 2021 23:56:35.751 
+toukok. 17, 2021 23:56:35.751 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 17, 2021 23:56:35.752 
+
+toukok. 18, 2021 23:14:38.940 NEW SESSION
+toukok. 18, 2021 23:14:38.940 
+toukok. 18, 2021 23:14:38.941 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 18, 2021 23:14:38.941 
+toukok. 18, 2021 23:20:54.517 
+toukok. 18, 2021 23:20:54.518 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 18, 2021 23:20:54.518 
+toukok. 18, 2021 23:51:32.728 
+toukok. 18, 2021 23:51:32.729 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 18, 2021 23:51:32.729 
+
+toukok. 19, 2021 20:24:46.232 NEW SESSION
+toukok. 19, 2021 20:24:46.232 
+toukok. 19, 2021 20:24:46.234 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 19, 2021 20:24:46.238 
+
+toukok. 19, 2021 23:03:24.814 NEW SESSION
+toukok. 19, 2021 23:03:24.814 
+toukok. 19, 2021 23:03:24.816 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 19, 2021 23:03:24.819 
+
+toukok. 19, 2021 23:17:18.481 NEW SESSION
+toukok. 19, 2021 23:17:18.481 
+toukok. 19, 2021 23:17:18.484 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 19, 2021 23:17:18.487 
+toukok. 19, 2021 23:19:45.848 
+toukok. 19, 2021 23:19:45.851 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 19, 2021 23:19:45.855 
+
+toukok. 20, 2021 24:28:13.323 NEW SESSION
+toukok. 20, 2021 24:28:13.323 
+toukok. 20, 2021 24:28:13.330 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+toukok. 20, 2021 24:28:13.333 

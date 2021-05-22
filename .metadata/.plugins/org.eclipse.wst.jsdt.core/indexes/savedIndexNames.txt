@@ -1,0 +1,9 @@
+INDEX VERSION 1.4+C:\Private\AMKoodari\Java2\Tentti\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1244426384.index
+3539768920.index
+2062559989.index
+1636025618.index
+415555912.index
+75951342.index
+931282993.index
+2740831289.index

@@ -1,0 +1,122 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--  script src="scripts/main.js"></script -->
+<title>listaa veneet</title>
+<style>
+.oikealle {
+	text-align: right;
+}
+</style>
+</head>
+<body onkeydown="tutkiKey(event)">
+	<table id="listaus">
+		<thead>
+			<tr>
+				<th colspan="5" id="ilmo"></th>
+				<th><a id="uusiVene" href="lisaavene.jsp">Lisää uusi
+						vene</a></th>
+			</tr>
+			<tr>
+				<th class="oikealle">Hakusana:</th>
+				<th colspan="4"><input type="text" id="hakusana"></th>
+				<th><input type="button" value="hae" id="hakunappi"
+					onclick="haeVeneet()"></th>
+			</tr>
+			<tr>
+				<th>Veneen nimi</th>
+				<th>Merkki ja malli</th>
+				<th>Pituus</th>
+				<th>Leveys</th>
+				<th>Hinta</th>
+				<th>&nbsp;</th>
+				<!--  &nbsp; välilyönti jolla saadaan paremman näköinen   -->
+
+			</tr>
+		</thead>
+		<tbody id="tbody">
+		</tbody>
+	</table>
+	<script>
+	$(document).ready(function() {
+		$("#uusiVene").click(function() {
+			document.location = "lisaavene.jsp";
+		});
+
+		haeVeneet();
+		$("#hakunappi").click(function() {
+			haeVeneet();
+		});
+		$(document.body).on("keydown", function(event) {
+			if (event.which == 13) { //Enteriä painettu, ajetaan haku
+				haeVeneet();
+			}
+		});
+		$("#hakusana").focus();//viedään kursori hakusana-kenttään sivun latauksen yhteydessä
+	});
+
+
+		//Funktio tietojen hakemista varten
+		//GET   /asiakkaat/{hakusana}
+		function haeVeneet() {
+			$("#listaus tbody").empty();
+			$.ajax({
+				url : "veneet/" + $("#hakusana").val(),
+				type : "GET",
+				dataType : "json",
+				success : function(result) {//Funktio palauttaa tiedot json-objektina		
+					$.each(result.veneet, function(i, field) {
+						var htmlStr;
+						htmlStr+="<tr id='rivi_"+field.tunnus +"'>";
+						htmlStr += "<td>" + field.nimi + "</td>";
+						htmlStr += "<td>" + field.merkkimalli + "</td>";
+						htmlStr += "<td>" + field.pituus + "</td>";
+						htmlStr += "<td>" + field.leveys + "</td>";
+						htmlStr += "<td>" + field.hinta + "</td>";
+						htmlStr+="<td><a href='muutavene.jsp?tunnus="+field.tunnus+"'>Muuta</a>&nbsp;"; 
+						htmlStr += "<span class='poista' onclick=poista("+field.tunnus+",'"+field.nimi+"','"+field.merkkimalli+"')>Poista</span></td>";    //Muodostetaan linkki 
+						htmlStr += "</tr>";
+						$("#listaus tbody").append(htmlStr);
+					});
+				}
+			});
+
+		}
+
+		//Funktio tietojen poistamista varten. Kutsutaan backin DELETE-metodia ja välitetään poistettavan tiedon id. 
+		//DELETE /autot/id
+		/*
+		function poista(tunnus) {
+			if (confirm("Poista vene " + tunnus + "?")) {
+				fetch("veneet/" + tunnus, {//Lähetetään kutsu backendiin
+					method : 'DELETE'
+				})
+						.then(function(response) {//Odotetaan vastausta ja muutetaan JSON-vastaus objektiksi
+							return response.json()
+						})
+						.then(
+								function(responseJson) {//Otetaan vastaan objekti responseJson-parametrissä		
+									var vastaus = responseJson.response;
+									if (vastaus == 0) {
+										document.getElementById("ilmo").innerHTML = "Veneen poisto epäonnistui.";
+									} else if (vastaus == 1) {
+										document.getElementById("ilmo").innerHTML = "Veneen "
+												+ nimi + " poisto onnistui.";
+										haeTiedot();
+									}
+									setTimeout(
+											function() {
+												document.getElementById("ilmo").innerHTML = "";
+											}, 5000);
+								})
+			}
+		}
+		*/
+	</script>
+</body>
+</html>

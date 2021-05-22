@@ -1,0 +1,123 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="scripts/main.js"></script>
+<title>listaa asiakkaat</title>
+<style>
+.oikealle {
+	text-align: right;
+}
+</style>
+</head>
+<body onkeydown="tutkiKey(event)">
+	<table id="listaus">
+		<thead>
+			<tr>
+				<th colspan="5" id="ilmo"></th>
+				<th><a id="uusiAsiakas" href="lisaavene.jsp">Lis‰‰ uusi
+						asiakas</a></th>
+			</tr>
+			<tr>
+				<th class="oikealle">Hakusana:</th>
+				<th colspan="4"><input type="text" id="hakusana"></th>
+				<th><input type="button" value="hae" id="hakunappi"
+					onclick="haeVeneet()"></th>
+			</tr>
+			<tr>
+				<th>Veneen nimi</th>
+				<th>Merkki ja malli</th>
+				<th>Pituus</th>
+				<th>Leveys</th>
+				<th>Hinta</th>
+				<th>&nbsp;</th>
+				<!--  &nbsp; v‰lilyˆnti jolla saadaan paremman n‰kˆinen   -->
+
+			</tr>
+		</thead>
+		<tbody id="tbody">
+		</tbody>
+	</table>
+	<script>
+		haeVeneet();
+		document.getElementById("hakusana").focus();//vied‰‰n kursori hakusana-kentt‰‰n sivun latauksen yhteydess‰
+
+		function tutkiKey(event) {
+			if (event.keyCode == 13) {//Enter
+				haeAsiakkaat();
+			}
+		}
+
+		//Funktio tietojen hakemista varten
+		//GET   /asiakkaat/{hakusana}
+		function haeVeneet() {
+			document.getElementById("tbody").innerHTML = "";
+			fetch("veneet/" + document.getElementById("hakusana").value, {//L‰hetet‰‰n kutsu backendiin
+				method : 'GET'
+			})
+					.then(function(response) {//Odotetaan vastausta ja muutetaan JSON-vastaus objektiksi
+						console.log(response);
+						return response.json()
+					})
+					.then(
+							function(responseJson) {
+								var asiakkaat = responseJson.asiakkaat;
+								var htmlStr = "";
+								for (var i = 0; i < asiakkaat.length; i++) {
+									htmlStr += "<tr>";
+									htmlStr += "<td>" + veneet[i].nimi
+											+ "</td>";
+									htmlStr += "<td>" + veneet[i].merkkimalli
+											+ "</td>";
+									htmlStr += "<td>" + veneet[i].pituus
+											+ "</td>";
+									htmlStr += "<td>" + veneet[i].leveys
+											+ "</td>";
+									htmlStr += "<td>" + veneet[i].hinta
+											+ "</td>";
+									htmlStr += "<td><a href='muutavene.jsp?tunnus="
+											+ veneet[i].tunnus
+											+ "'>Muuta</a>&nbsp;";
+									htmlStr += "<span class='poista' onclick=poista('"
+											+ veneet[i].tunnus
+											+ "')>Poista</span></td>";
+									htmlStr += "</tr>";
+								}
+								document.getElementById("tbody").innerHTML = htmlStr;
+							})
+		}
+
+		//Funktio tietojen poistamista varten. Kutsutaan backin DELETE-metodia ja v‰litet‰‰n poistettavan tiedon id. 
+		//DELETE /autot/id
+
+		function poista(asiakas_id) {
+			if (confirm("Poista vene " + tunnus + "?")) {
+				fetch("veneet/" + tunnus, {//L‰hetet‰‰n kutsu backendiin
+					method : 'DELETE'
+				})
+						.then(function(response) {//Odotetaan vastausta ja muutetaan JSON-vastaus objektiksi
+							return response.json()
+						})
+						.then(
+								function(responseJson) {//Otetaan vastaan objekti responseJson-parametriss‰		
+									var vastaus = responseJson.response;
+									if (vastaus == 0) {
+										document.getElementById("ilmo").innerHTML = "Veneen poisto ep‰onnistui.";
+									} else if (vastaus == 1) {
+										document.getElementById("ilmo").innerHTML = "Veneen "
+												+ nimi + " poisto onnistui.";
+										haeTiedot();
+									}
+									setTimeout(
+											function() {
+												document.getElementById("ilmo").innerHTML = "";
+											}, 5000);
+								})
+			}
+		}
+	</script>
+</body>
+</html>
